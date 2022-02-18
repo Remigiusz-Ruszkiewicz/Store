@@ -9,5 +9,6 @@ namespace Store.Models
         public int CategoryId { get; set; }
         public CategoryViewModel Category { get; set; }
         public int Price { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -23,13 +23,14 @@ namespace Store.Services
             return await dbContext.Products.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Product> AddAsync(ProductCreateViewModel product)
+        public async Task<Product> AddAsync(ProductCreateViewModel product,string Userid)
         {
             Product product1 = new Product();
             product1.Id = Guid.NewGuid();
             product1.Name = product.Name;
             product1.CategoryId = product.CategoryId;
             product1.Price = product.Price;
+            product1.UserId = Userid;
             dbContext.Products.Add(product1);
             await dbContext.SaveChangesAsync();
             var productToReturn = await GetAsync(product1.Id);
@@ -53,6 +54,11 @@ namespace Store.Services
             dbContext.Products.Remove(product);
             await dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<ICollection<Product>> GetUserProductsAsync(string id)
+        {
+            return await dbContext.Products.Where(x => x.UserId == id).Include(x => x.Category).ToListAsync();
         }
     }
 }

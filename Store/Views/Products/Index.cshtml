@@ -10,6 +10,8 @@
             <th scope="col">Nazwa</th>
             <th scope="col">Kategoria</th>
             <th scope="col">Cena</th>
+            <th scope="col">Edycja</th>
+            <th scope="col">Usuwanie</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +21,8 @@
                 <td>@item.Name</td>
                 <td>@item.Category.Name</td>
                 <td>@item.Price</td>
+                <td><input type="button" value="Edytuj" onclick="location.href='@Url.Action("Index", "Products")'" /></td>
+                <td><input type="button" value="Usuń" onclick="location.href='@Url.Action("Delete", "Products",new{id = item.Id.ToString()})'" /></td>
             </tr>
         }
     </tbody>

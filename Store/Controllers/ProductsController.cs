@@ -18,7 +18,8 @@ namespace Store.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await productsService.GetAllAsync();
+            var CookieValue = Request.Cookies["loginCookie"];
+            var products = await productsService.GetUserProductsAsync(CookieValue);
             return View(products);
         }
         public async Task<IActionResult> Create()
@@ -32,8 +33,19 @@ namespace Store.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateViewModel product)
         {
-            await productsService.AddAsync(product);
+            await productsService.AddAsync(product, Request.Cookies["loginCookie"]);
             return RedirectToAction("Index", "Products");
         }
+        public async Task<IActionResult> Delete(string id)
+        {
+            await productsService.DeleteAsync(Guid.Parse(id));
+            return RedirectToAction("Index", "Products");
+        }
+        public async Task<IActionResult> Put(Product product)
+        {
+            await productsService.UpdateAsync(product);
+            return RedirectToAction("Index", "Products");
+        }
+        
     }
 }
