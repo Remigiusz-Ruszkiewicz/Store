@@ -7,6 +7,5 @@ namespace Store.Models
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public SelectList Categories { get; set; }
     }
 }

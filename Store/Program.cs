@@ -8,8 +8,8 @@ ConfigurationManager configuration = builder.Configuration;
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 
 var app = builder.Build();
@@ -31,6 +31,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Users}/{action=Login}/{id?}");
 
 app.Run();

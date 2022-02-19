@@ -17,15 +17,45 @@ namespace Store.Controllers
         {
             return View();
         }
-
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("loginCookie");
+            return RedirectToAction("Login", "Users");
+        }
         [HttpPost]
         public async Task<IActionResult> Login(UserModel user)
         {
             UserModel result = usersService.LoginAsync(user.UserName, user.Password).Result;
+            if (result != null)
+            {
+                Response.Cookies.Append("loginCookie", result.Id.ToString(), new CookieOptions() { Expires = DateTime.Now.AddDays(7) });
 
-            Response.Cookies.Append("loginCookie", result.Id.ToString(), new CookieOptions() { Expires = DateTime.Now.AddDays(7)});
+                return RedirectToAction("Index", "Products");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Users");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserModel user)
+        {
+            UserModel result = usersService.AddAsync(user.UserName, user.Password).Result;
+            if (result != null)
+            {
+                Response.Cookies.Append("loginCookie", result.Id.ToString(), new CookieOptions() { Expires = DateTime.Now.AddDays(7) });
 
-            return RedirectToAction("Index", "Products");
+                return RedirectToAction("Index", "Products");
+            }
+            else
+            {
+                return RedirectToAction("Register", "Users");
+            }
+            
         }
     }
 }

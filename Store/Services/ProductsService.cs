@@ -15,12 +15,12 @@ namespace Store.Services
 
         public async Task<ICollection<Product>> GetAllAsync()
         {
-            return await dbContext.Products.Include(x => x.Category).ToListAsync();
+            return await dbContext.Products.ToListAsync();
         }
 
         public async Task<Product> GetAsync(Guid id)
         {
-            return await dbContext.Products.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
+            return await dbContext.Products.SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Product> AddAsync(ProductCreateViewModel product,string Userid)
@@ -28,7 +28,6 @@ namespace Store.Services
             Product product1 = new Product();
             product1.Id = Guid.NewGuid();
             product1.Name = product.Name;
-            product1.CategoryId = product.CategoryId;
             product1.Price = product.Price;
             product1.UserId = Userid;
             dbContext.Products.Add(product1);
@@ -58,7 +57,7 @@ namespace Store.Services
 
         public async Task<ICollection<Product>> GetUserProductsAsync(string id)
         {
-            return await dbContext.Products.Where(x => x.UserId == id).Include(x => x.Category).ToListAsync();
+            return await dbContext.Products.Where(x => x.UserId == id).ToListAsync();
         }
     }
 }

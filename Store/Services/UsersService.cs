@@ -15,17 +15,26 @@ namespace Store.Services
         {
             this.dbContext = dbContext;
         }
-        public async Task<bool> AddAsync(string email, string password)
+        public async Task<UserModel> AddAsync(string email, string password)
         {
-            UserModel product1 = new UserModel();
-            product1.Id = Guid.NewGuid();
-            product1.UserName = email;
-            product1.Password = password;
-            dbContext.Users.Add(product1);
-            return dbContext.SaveChangesAsync().IsCompleted;
-            //var productToReturn = await GetAsync(product1.Id);
-            //return productToReturn;
-            //return true;
+            if (!dbContext.Users.Where(x => x.UserName == email).Any())
+            {
+                UserModel product1 = new UserModel();
+                product1.Id = Guid.NewGuid();
+                product1.UserName = email;
+                product1.Password = password;
+                dbContext.Users.Add(product1);
+                bool isSuccesfull = dbContext.SaveChangesAsync().IsCompletedSuccessfully;
+                if (isSuccesfull)
+                {
+                    return product1;
+                }
+                else return null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<UserModel> LoginAsync(string email, string password)

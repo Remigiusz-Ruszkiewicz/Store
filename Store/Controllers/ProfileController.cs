@@ -1,22 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Store.Models;
 using Store.Services;
+using System.Diagnostics;
 
 namespace Store.Controllers
 {
-    public class ProductsController : Controller
+    public class ProfileController : Controller
     {
         private readonly IProductsService productsService;
 
-        public ProductsController(IProductsService productsService)
+        public ProfileController(IProductsService productsService)
         {
             this.productsService = productsService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var products = await productsService.GetAllAsync();
+            var CookieValue = Request.Cookies["loginCookie"];
+            var products = await productsService.GetUserProductsAsync(CookieValue);
             return View(products);
         }
         public async Task<IActionResult> Create()
@@ -41,13 +42,12 @@ namespace Store.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             await productsService.DeleteAsync(Guid.Parse(id));
-            return RedirectToAction("Index", "Products");
+            return RedirectToAction("Index", "Profile");
         }
         public async Task<IActionResult> Put(Product product)
         {
             await productsService.UpdateAsync(product);
             return RedirectToAction("Index", "Products");
         }
-        
     }
 }

@@ -9,7 +9,7 @@
         <tr>
             <th scope="col">Nazwa</th>
             <th scope="col">Cena</th>
-            <th scope="col">Koszyk</th>
+            <th scope="col">Usuwanie</th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Price</td>
-                <td><input type="button" value="Dodaj Do Koszyka" onclick="location.href='@Url.Action("AddToCart", "Basket",new{id = item.Id.ToString()})'" /></td>
+                <td><input type="button" value="Usuń z Koszyka" onclick="location.href='@Url.Action("RemoveFromBasket", "Basket",new{id = item.Id.ToString()})'" /></td>
             </tr>
         }
     </tbody>
