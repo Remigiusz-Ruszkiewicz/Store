@@ -38,7 +38,7 @@ namespace Store.Services
 
         public async Task<Product> UpdateAsync(Product product)
         {
-            dbContext.Products.Update(product);
+            await dbContext.Products.Update(product).ReloadAsync();
 
             await dbContext.SaveChangesAsync();
             return product;

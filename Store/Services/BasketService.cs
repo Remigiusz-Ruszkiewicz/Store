@@ -27,9 +27,9 @@ namespace Store.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            var product = await dbContext.Basket.SingleOrDefaultAsync(x => x.Id.ToString() == id);
+            var product = await dbContext.Basket.Where(x => x.ProductId == id.ToString()).SingleOrDefaultAsync();
             if (product == null)
                 return false;
 

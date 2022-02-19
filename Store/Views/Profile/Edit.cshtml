@@ -12,7 +12,7 @@
             <label for="exampleFormControlInput1">Cena</label>
             <input type="number" value="@Model.Price"  class="form-control"  asp-for="Price"/>
         </div>
-        <td><input type="submit" class="btn btn-primary" value="Edytuj" onclick="location.href='@Url.Action("Update", "Profile",Model)'" /></td>
+        <td><input type="submit" class="btn btn-primary" value="Edytuj" onclick="location.href='@Url.Action("Update", "Products",Model)'" /></td>
     </form>
 @section Scripts{ 
 @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

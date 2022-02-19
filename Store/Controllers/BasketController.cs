@@ -20,9 +20,9 @@ namespace Store.Controllers
             }
             return RedirectToAction("Index", "Products");
         }
-        public async Task<IActionResult> RemoveFromBasket(string id)
+        public async Task<IActionResult> RemoveFromBasket(Guid id)
         {
-           // await productsService.DeleteAsync(Guid.Parse(id));
+            await basketService.DeleteAsync(id);
             return RedirectToAction("Index", "Products");
         }
         public async Task<IActionResult> AddToCart(string id)

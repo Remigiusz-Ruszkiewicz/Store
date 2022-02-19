@@ -9,6 +9,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 

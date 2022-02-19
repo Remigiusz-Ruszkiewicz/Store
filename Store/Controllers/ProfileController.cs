@@ -8,10 +8,12 @@ namespace Store.Controllers
     public class ProfileController : Controller
     {
         private readonly IProductsService productsService;
+        private readonly IProfileService profileService;
 
-        public ProfileController(IProductsService productsService)
+        public ProfileController(IProductsService productsService, IProfileService profileService)
         {
             this.productsService = productsService;
+            this.profileService = profileService;
         }
 
         public async Task<IActionResult> Index()
@@ -32,7 +34,7 @@ namespace Store.Controllers
         }
         public async Task<IActionResult> Update(Product product)
         {
-            await productsService.UpdateAsync(product);
+            await profileService.UpdateAsync(product);
             return RedirectToAction("Index", "Products");
         }
         public async Task<IActionResult> Edit(Product product)
